@@ -1,4 +1,9 @@
-"""Painel de curadoria — minimalista, editorial, inspirado em MAD."""
+"""Painel interno de curadoria do ESUP News.
+
+Não é o produto público. É a ferramenta administrativa usada pelo curador
+para aprovar/rejeitar notícias coletadas. Otimizado para clareza, contraste
+alto e velocidade de decisão.
+"""
 from __future__ import annotations
 
 import json
@@ -10,86 +15,90 @@ from esup_news.config import settings
 from esup_news.db import connect
 
 st.set_page_config(
-    page_title="ESUP News — curadoria",
-    page_icon="·",
+    page_title="ESUP News — Curadoria",
+    page_icon=":newspaper:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# --- Estilo editorial mínimo ---
+# ----------------------------------------------------------------------------
+# Estilo: limpo, alto contraste, foco em legibilidade.
+# Funciona com o tema padrão do Streamlit (escuro ou claro do usuário).
+# ----------------------------------------------------------------------------
 st.markdown(
     """
     <style>
-      :root {
-        --bg: #fafaf7;
-        --fg: #111;
-        --muted: #6b6b66;
-        --line: #e8e6df;
-        --accent: #111;
-      }
-      .stApp { background: var(--bg); }
-      html, body, [class*="css"]  {
-        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-        color: var(--fg);
-      }
-      h1, h2, h3, h4 {
-        font-family: "Times New Roman", Georgia, serif;
-        letter-spacing: -0.01em;
+      .block-container { padding-top: 1.5rem; max-width: 1280px; }
+      h1, h2, h3 { font-weight: 600; }
+      h1 { font-size: 1.6rem !important; margin-bottom: 0.25rem !important; }
+
+      .esup-tag {
+        display: inline-block;
+        font-size: 0.72rem;
         font-weight: 600;
-      }
-      h1 { font-size: 2.4rem; line-height: 1.05; margin: 0 0 .25rem 0; }
-      .esup-eyebrow {
         text-transform: uppercase;
-        letter-spacing: .18em;
-        font-size: .72rem;
-        color: var(--muted);
-        margin-bottom: .25rem;
+        letter-spacing: 0.06em;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-right: 6px;
       }
-      .esup-hr { border: 0; border-top: 1px solid var(--line); margin: 1.25rem 0; }
-      .esup-card {
-        border-top: 1px solid var(--line);
-        padding: 1.1rem 0 .9rem 0;
+      .tag-curso   { background: #1f3a5f; color: #fff; }
+      .tag-score   { background: #c8a96a; color: #1a1a18; }
+      .tag-fonte   { background: #2a2a28; color: #e8e6df; }
+      .tag-tempo   { background: #3a2a18; color: #f5d29a; }
+      .tag-pending { background: #5a4a1a; color: #fff5d0; }
+      .tag-approved{ background: #1a4a2a; color: #d0f5d0; }
+      .tag-rejected{ background: #4a1a1a; color: #f5d0d0; }
+
+      .esup-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 0.6rem 0 0.5rem 0;
+      }
+      .esup-subtitle {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        opacity: 0.85;
+        margin-bottom: 0.6rem;
       }
       .esup-meta {
-        color: var(--muted);
-        font-size: .82rem;
-        letter-spacing: .02em;
+        font-size: 0.82rem;
+        opacity: 0.7;
+        margin-bottom: 0.5rem;
       }
-      .esup-score {
-        display: inline-block;
-        font-variant-numeric: tabular-nums;
+      .esup-terms {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        margin-top: 0.5rem;
+      }
+      .esup-divider { border-top: 1px solid rgba(120,120,120,0.25); margin: 1.5rem 0; }
+
+      /* Botões legíveis em qualquer tema */
+      .stButton > button {
         font-weight: 600;
-        font-size: .82rem;
-        border: 1px solid var(--line);
-        padding: 2px 8px;
-        border-radius: 999px;
-        margin-right: .5rem;
+        border-radius: 6px;
       }
-      .esup-term {
-        display: inline-block;
-        font-size: .78rem;
-        color: var(--muted);
-        margin-right: .65rem;
+
+      /* Métricas no topo */
+      [data-testid="stMetricValue"] {
+        font-size: 1.6rem !important;
+        font-weight: 700 !important;
       }
-      a, a:visited { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-      .stButton>button {
-        border: 1px solid var(--fg);
-        background: var(--bg);
-        color: var(--fg);
-        border-radius: 0;
-        padding: .35rem 1rem;
-        font-weight: 500;
-        letter-spacing: .02em;
+      [data-testid="stMetricLabel"] {
+        font-size: 0.78rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
-      .stButton>button:hover { background: var(--fg); color: var(--bg); }
-      section[data-testid="stSidebar"] { background: #f3f1ea; border-right: 1px solid var(--line); }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-# --- Helpers ---
+# ----------------------------------------------------------------------------
+# Funções de acesso a dados
+# ----------------------------------------------------------------------------
 def fetch_courses():
     with connect() as conn:
         rows = conn.execute(
@@ -98,7 +107,37 @@ def fetch_courses():
     return [dict(r) for r in rows]
 
 
-def fetch_pending(
+def fetch_totals():
+    with connect() as conn:
+        articles = conn.execute("SELECT COUNT(*) AS n FROM articles").fetchone()["n"]
+        pending = conn.execute(
+            "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='pending'"
+        ).fetchone()["n"]
+        approved = conn.execute(
+            "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='approved'"
+        ).fetchone()["n"]
+        rejected = conn.execute(
+            "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='rejected'"
+        ).fetchone()["n"]
+    return articles, pending, approved, rejected
+
+
+def fetch_per_course_pending():
+    with connect() as conn:
+        rows = conn.execute(
+            """
+            SELECT c.name AS nome, COUNT(*) AS pendentes
+            FROM editorial_decisions d
+            JOIN courses c ON c.id = d.course_id
+            WHERE d.decision = 'pending'
+            GROUP BY c.id, c.name
+            ORDER BY c.name
+            """
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def fetch_articles(
     course_id: int | None,
     provider: str | None,
     decision: str,
@@ -122,9 +161,9 @@ def fetch_pending(
     sql = f"""
         SELECT a.id AS article_id, m.course_id, c.name AS course_name, c.slug AS course_slug,
                a.title, a.description, a.snippet, a.url, a.source_name, a.source_domain,
-               a.published_at, a.provider, a.image_url, a.language,
+               a.published_at, a.provider, a.language,
                m.relevance_score, m.matched_terms, m.score_breakdown,
-               m.recency_bucket, m.provider_priority, m.is_primary,
+               m.recency_bucket,
                COALESCE(d.decision, 'pending') AS decision, d.reason
         FROM articles a
         JOIN article_course_matches m ON m.article_id = a.id
@@ -154,136 +193,240 @@ def set_decision(article_id: int, course_id: int, decision: str, reason: str | N
         )
 
 
-def fmt_date(iso: str) -> str:
+def fmt_date_local(iso: str) -> str:
     try:
         dt = datetime.fromisoformat((iso or "").replace("Z", "+00:00"))
-        return dt.strftime("%d %b %Y · %H:%M UTC").lower()
+        return dt.strftime("%d/%m/%Y %H:%M UTC")
     except Exception:
         return iso or ""
 
 
-REASONS = ["", "good", "off_topic", "low_quality", "duplicate", "paywall", "outdated"]
+REASONS = ["—", "good", "off_topic", "low_quality", "duplicate", "paywall", "outdated"]
+REASON_LABELS = {
+    "—": "—",
+    "good": "boa matéria",
+    "off_topic": "fora do tema",
+    "low_quality": "qualidade baixa",
+    "duplicate": "duplicada",
+    "paywall": "paywall",
+    "outdated": "antiga / sem atualidade",
+}
 
 
-# --- Sidebar ---
+# ============================================================================
+# SIDEBAR — filtros
+# ============================================================================
 with st.sidebar:
-    st.markdown('<div class="esup-eyebrow">esup news</div>', unsafe_allow_html=True)
-    st.markdown("### curadoria")
+    st.markdown("### ESUP News")
+    st.caption("Painel de curadoria")
+    st.markdown("---")
+
+    st.markdown("**Filtros**")
     courses = fetch_courses()
-    course_options = {c["name"]: c["id"] for c in courses}
-    course_pick = st.selectbox("curso", ["todos"] + list(course_options.keys()))
-    course_id = None if course_pick == "todos" else course_options[course_pick]
+    course_options = ["Todos os cursos"] + [c["name"] for c in courses]
+    course_pick = st.selectbox("Curso", course_options, index=0)
+    course_id = None
+    if course_pick != "Todos os cursos":
+        course_id = next(c["id"] for c in courses if c["name"] == course_pick)
 
-    provider_pick = st.selectbox("fonte", ["todas", "newsdata", "thenewsapi"])
-    provider = None if provider_pick == "todas" else provider_pick
-
-    decision_pick = st.selectbox("estado", ["pending", "approved", "rejected", "all"])
-    only_primary = st.toggle("apenas curso primário", value=True)
-    limit = st.slider("itens", 10, 200, 50, step=10)
-
-
-# --- Header ---
-st.markdown('<div class="esup-eyebrow">painel editorial · v0.2</div>', unsafe_allow_html=True)
-st.markdown("# ESUP News")
-st.markdown('<hr class="esup-hr" />', unsafe_allow_html=True)
-
-
-# --- Métricas mínimas ---
-with connect() as conn:
-    pending_total = conn.execute(
-        "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='pending'"
-    ).fetchone()["n"]
-    approved_total = conn.execute(
-        "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='approved'"
-    ).fetchone()["n"]
-    rejected_total = conn.execute(
-        "SELECT COUNT(*) AS n FROM editorial_decisions WHERE decision='rejected'"
-    ).fetchone()["n"]
-    articles_total = conn.execute("SELECT COUNT(*) AS n FROM articles").fetchone()["n"]
-
-cols = st.columns(4)
-for col, label, value in zip(
-    cols,
-    ("artigos", "pendentes", "aprovados", "rejeitados"),
-    (articles_total, pending_total, approved_total, rejected_total),
-):
-    col.markdown(
-        f"<div class='esup-eyebrow'>{label}</div>"
-        f"<div style='font-size:1.8rem;font-weight:600;'>{value}</div>",
-        unsafe_allow_html=True,
+    provider_pick = st.selectbox(
+        "Fonte (API)",
+        ["Todas", "NewsData.io", "The News API"],
+        index=0,
+        help="De qual API a notícia veio.",
+    )
+    provider = (
+        None
+        if provider_pick == "Todas"
+        else ("newsdata" if provider_pick == "NewsData.io" else "thenewsapi")
     )
 
-st.markdown('<hr class="esup-hr" />', unsafe_allow_html=True)
+    decision_pick = st.selectbox(
+        "Estado da decisão",
+        ["pending", "approved", "rejected", "all"],
+        index=0,
+        format_func=lambda x: {
+            "pending": "Pendentes",
+            "approved": "Aprovadas",
+            "rejected": "Rejeitadas",
+            "all": "Todas",
+        }[x],
+    )
+
+    only_primary = st.checkbox(
+        "Apenas curso principal",
+        value=True,
+        help="Quando uma notícia casa com vários cursos, mostra só aquela em que o score é mais alto.",
+    )
+    limit = st.slider("Quantas notícias listar", 10, 200, 50, step=10)
+
+    st.markdown("---")
+    st.caption(
+        "Use os filtros acima para isolar o que revisar. "
+        "Aprovar publica a notícia no jornal. "
+        "Rejeitar remove daquele curso (mantém em outros, se houver)."
+    )
 
 
-# --- Lista ---
-items = fetch_pending(course_id, provider, decision_pick, only_primary, limit=limit)
+# ============================================================================
+# TOPO — visão geral
+# ============================================================================
+st.title("Curadoria de notícias")
+st.caption(
+    "Revise as notícias coletadas automaticamente e decida quais entram no jornal. "
+    "As decisões ficam guardadas no banco e alimentam o ajuste do sistema."
+)
+
+articles_total, pending_total, approved_total, rejected_total = fetch_totals()
+
+m1, m2, m3, m4 = st.columns(4)
+m1.metric("Coletadas no total", articles_total)
+m2.metric("Aguardando você", pending_total)
+m3.metric("Aprovadas", approved_total)
+m4.metric("Rejeitadas", rejected_total)
+
+# Distribuição rápida por curso (só pendentes)
+per_course = fetch_per_course_pending()
+if per_course:
+    with st.expander("Pendentes por curso", expanded=False):
+        cols = st.columns(min(len(per_course), 4))
+        for i, p in enumerate(per_course):
+            col = cols[i % len(cols)]
+            col.metric(p["nome"], p["pendentes"])
+
+st.markdown("<div class='esup-divider'></div>", unsafe_allow_html=True)
+
+# ============================================================================
+# LISTA — notícias para curadoria
+# ============================================================================
+items = fetch_articles(course_id, provider, decision_pick, only_primary, limit=limit)
+
+# Cabeçalho da lista
+header_text = {
+    "pending": f"{len(items)} notícia(s) aguardando revisão",
+    "approved": f"{len(items)} notícia(s) aprovada(s)",
+    "rejected": f"{len(items)} notícia(s) rejeitada(s)",
+    "all": f"{len(items)} notícia(s) no filtro",
+}[decision_pick]
+st.subheader(header_text)
 
 if not items:
-    st.markdown(
-        "<div class='esup-meta'>nada por aqui. rode <code>python -m esup_news.cli ingest --all --window=12h</code> para coletar.</div>",
-        unsafe_allow_html=True,
+    st.info(
+        "Sem notícias para os filtros atuais. "
+        "Se ainda não coletou, abra o terminal e rode: "
+        "`python -m esup_news.cli ingest --all --window=24h`"
     )
 
+# Cada item
 for it in items:
+    terms = json.loads(it["matched_terms"] or "[]")
+
     with st.container():
-        st.markdown('<div class="esup-card">', unsafe_allow_html=True)
-
-        terms = json.loads(it["matched_terms"] or "[]")
-        terms_html = "".join(f"<span class='esup-term'>{t}</span>" for t in terms[:8])
-
         st.markdown(
-            f"<div class='esup-eyebrow'>{it['course_name']} · {it['provider']}</div>",
+            "<div style='margin-bottom: 1.2rem; padding-bottom: 1.2rem; "
+            "border-bottom: 1px solid rgba(120,120,120,0.18);'>",
             unsafe_allow_html=True,
         )
-        st.markdown(f"### {it['title']}")
+
+        # Linha de tags: curso · score · fonte · tempo · estado
+        decision_tag_class = {
+            "pending": "tag-pending",
+            "approved": "tag-approved",
+            "rejected": "tag-rejected",
+        }.get(it["decision"], "tag-pending")
+        decision_label = {
+            "pending": "PENDENTE",
+            "approved": "APROVADA",
+            "rejected": "REJEITADA",
+        }.get(it["decision"], "PENDENTE")
+
+        tags_html = (
+            f"<span class='esup-tag tag-curso'>{it['course_name']}</span>"
+            f"<span class='esup-tag tag-score'>SCORE {it['relevance_score']}</span>"
+            f"<span class='esup-tag tag-fonte'>{it['source_name'] or it['source_domain'] or '—'}</span>"
+            f"<span class='esup-tag tag-tempo'>{it['recency_bucket'] or '—'}</span>"
+            f"<span class='esup-tag {decision_tag_class}'>{decision_label}</span>"
+        )
+        st.markdown(tags_html, unsafe_allow_html=True)
+
+        # Título
+        st.markdown(
+            f"<div class='esup-title'>{it['title']}</div>",
+            unsafe_allow_html=True,
+        )
+
+        # Descrição
+        if it["description"]:
+            st.markdown(
+                f"<div class='esup-subtitle'>{it['description']}</div>",
+                unsafe_allow_html=True,
+            )
+
+        # Linha de metadados detalhados
         st.markdown(
             f"<div class='esup-meta'>"
-            f"<span class='esup-score'>score {it['relevance_score']}</span>"
-            f"{it['source_name'] or it['source_domain']} · {fmt_date(it['published_at'])} · "
-            f"{it['recency_bucket'] or '-'} · {it['language'] or '-'}"
+            f"Publicada em {fmt_date_local(it['published_at'])} · "
+            f"Idioma: {it['language'] or 'desconhecido'} · "
+            f"API: {it['provider']}"
             f"</div>",
             unsafe_allow_html=True,
         )
 
-        if it["description"]:
-            st.markdown(
-                f"<div style='margin-top:.6rem;'>{it['description']}</div>",
-                unsafe_allow_html=True,
-            )
-
+        # Termos casados (o que fez essa notícia bater nesse curso)
         if terms:
+            terms_str = " · ".join(terms[:8])
             st.markdown(
-                f"<div style='margin-top:.5rem;'>{terms_html}</div>",
+                f"<div class='esup-terms'><b>Casou com:</b> {terms_str}</div>",
                 unsafe_allow_html=True,
             )
 
+        # Link para a fonte original
         st.markdown(
-            f"<div class='esup-meta' style='margin-top:.5rem;'><a href='{it['url']}' target='_blank'>"
-            "abrir notícia original →</a></div>",
+            f"<div class='esup-meta' style='margin-top:0.4rem;'>"
+            f"<a href='{it['url']}' target='_blank' rel='noreferrer'>"
+            f"Abrir notícia na fonte original ↗</a></div>",
             unsafe_allow_html=True,
         )
 
-        c1, c2, c3, _ = st.columns([1, 1, 2, 4])
-        key_prefix = f"{it['article_id']}_{it['course_id']}"
-        with c1:
-            if st.button("aprovar", key=f"a_{key_prefix}"):
+        # Ações
+        key = f"{it['article_id']}_{it['course_id']}"
+        action_cols = st.columns([1, 1, 2, 4])
+
+        with action_cols[0]:
+            if st.button("Aprovar", key=f"a_{key}", type="primary", use_container_width=True):
                 set_decision(it["article_id"], it["course_id"], "approved", None)
                 st.rerun()
-        with c2:
-            if st.button("rejeitar", key=f"r_{key_prefix}"):
-                reason = st.session_state.get(f"reason_{key_prefix}") or None
+        with action_cols[1]:
+            if st.button("Rejeitar", key=f"r_{key}", use_container_width=True):
+                raw_reason = st.session_state.get(f"reason_{key}", "—")
+                reason = None if raw_reason == "—" else raw_reason
                 set_decision(it["article_id"], it["course_id"], "rejected", reason)
                 st.rerun()
-        with c3:
+        with action_cols[2]:
             st.selectbox(
-                "motivo",
+                "Motivo (opcional)",
                 REASONS,
-                key=f"reason_{key_prefix}",
+                key=f"reason_{key}",
+                format_func=lambda x: REASON_LABELS[x],
                 label_visibility="collapsed",
             )
 
-        with st.expander("score_breakdown"):
-            st.json(json.loads(it["score_breakdown"] or "[]"))
+        # Breakdown do score (escondido por padrão para não poluir)
+        with st.expander("Por que essa nota?", expanded=False):
+            breakdown = json.loads(it["score_breakdown"] or "[]")
+            if breakdown:
+                lines = []
+                for b in breakdown:
+                    pts = b.get("points", 0)
+                    comp = b.get("component", "?")
+                    extra = b.get("term") or b.get("language") or ""
+                    sinal = "+" if pts >= 0 else ""
+                    line = f"`{sinal}{pts:>3}`  **{comp}**"
+                    if extra:
+                        line += f"  · `{extra}`"
+                    lines.append(line)
+                st.markdown("\n\n".join(lines))
+            else:
+                st.caption("Sem detalhes de score.")
 
         st.markdown("</div>", unsafe_allow_html=True)
