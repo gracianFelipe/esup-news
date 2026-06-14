@@ -1,4 +1,4 @@
-"""Painel interno de curadoria do ESUP News.
+"""Painel interno de curadoria do Prisma.
 
 Não é o produto público. É a ferramenta administrativa usada pelo curador
 para aprovar/rejeitar notícias coletadas. Otimizado para clareza, contraste
@@ -15,7 +15,7 @@ from esup_news.config import settings
 from esup_news.db import connect
 
 st.set_page_config(
-    page_title="ESUP News — Curadoria",
+    page_title="Prisma — Curadoria",
     page_icon=":newspaper:",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -32,7 +32,7 @@ st.markdown(
       h1, h2, h3 { font-weight: 600; }
       h1 { font-size: 1.6rem !important; margin-bottom: 0.25rem !important; }
 
-      .esup-tag {
+      .prisma-tag {
         display: inline-block;
         font-size: 0.72rem;
         font-weight: 600;
@@ -50,29 +50,29 @@ st.markdown(
       .tag-approved{ background: #1a4a2a; color: #d0f5d0; }
       .tag-rejected{ background: #4a1a1a; color: #f5d0d0; }
 
-      .esup-title {
+      .prisma-title {
         font-size: 1.25rem;
         font-weight: 600;
         line-height: 1.3;
         margin: 0.6rem 0 0.5rem 0;
       }
-      .esup-subtitle {
+      .prisma-subtitle {
         font-size: 0.95rem;
         line-height: 1.5;
         opacity: 0.85;
         margin-bottom: 0.6rem;
       }
-      .esup-meta {
+      .prisma-meta {
         font-size: 0.82rem;
         opacity: 0.7;
         margin-bottom: 0.5rem;
       }
-      .esup-terms {
+      .prisma-terms {
         font-size: 0.78rem;
         opacity: 0.75;
         margin-top: 0.5rem;
       }
-      .esup-divider { border-top: 1px solid rgba(120,120,120,0.25); margin: 1.5rem 0; }
+      .prisma-divider { border-top: 1px solid rgba(120,120,120,0.25); margin: 1.5rem 0; }
 
       /* Botões legíveis em qualquer tema */
       .stButton > button {
@@ -217,7 +217,7 @@ REASON_LABELS = {
 # SIDEBAR — filtros
 # ============================================================================
 with st.sidebar:
-    st.markdown("### ESUP News")
+    st.markdown("### Prisma")
     st.caption("Painel de curadoria")
     st.markdown("---")
 
@@ -294,7 +294,7 @@ if per_course:
             col = cols[i % len(cols)]
             col.metric(p["nome"], p["pendentes"])
 
-st.markdown("<div class='esup-divider'></div>", unsafe_allow_html=True)
+st.markdown("<div class='prisma-divider'></div>", unsafe_allow_html=True)
 
 # ============================================================================
 # LISTA — notícias para curadoria
@@ -341,30 +341,30 @@ for it in items:
         }.get(it["decision"], "PENDENTE")
 
         tags_html = (
-            f"<span class='esup-tag tag-curso'>{it['course_name']}</span>"
-            f"<span class='esup-tag tag-score'>SCORE {it['relevance_score']}</span>"
-            f"<span class='esup-tag tag-fonte'>{it['source_name'] or it['source_domain'] or '—'}</span>"
-            f"<span class='esup-tag tag-tempo'>{it['recency_bucket'] or '—'}</span>"
-            f"<span class='esup-tag {decision_tag_class}'>{decision_label}</span>"
+            f"<span class='prisma-tag tag-curso'>{it['course_name']}</span>"
+            f"<span class='prisma-tag tag-score'>SCORE {it['relevance_score']}</span>"
+            f"<span class='prisma-tag tag-fonte'>{it['source_name'] or it['source_domain'] or '—'}</span>"
+            f"<span class='prisma-tag tag-tempo'>{it['recency_bucket'] or '—'}</span>"
+            f"<span class='prisma-tag {decision_tag_class}'>{decision_label}</span>"
         )
         st.markdown(tags_html, unsafe_allow_html=True)
 
         # Título
         st.markdown(
-            f"<div class='esup-title'>{it['title']}</div>",
+            f"<div class='prisma-title'>{it['title']}</div>",
             unsafe_allow_html=True,
         )
 
         # Descrição
         if it["description"]:
             st.markdown(
-                f"<div class='esup-subtitle'>{it['description']}</div>",
+                f"<div class='prisma-subtitle'>{it['description']}</div>",
                 unsafe_allow_html=True,
             )
 
         # Linha de metadados detalhados
         st.markdown(
-            f"<div class='esup-meta'>"
+            f"<div class='prisma-meta'>"
             f"Publicada em {fmt_date_local(it['published_at'])} · "
             f"Idioma: {it['language'] or 'desconhecido'} · "
             f"API: {it['provider']}"
@@ -376,13 +376,13 @@ for it in items:
         if terms:
             terms_str = " · ".join(terms[:8])
             st.markdown(
-                f"<div class='esup-terms'><b>Casou com:</b> {terms_str}</div>",
+                f"<div class='prisma-terms'><b>Casou com:</b> {terms_str}</div>",
                 unsafe_allow_html=True,
             )
 
         # Link para a fonte original
         st.markdown(
-            f"<div class='esup-meta' style='margin-top:0.4rem;'>"
+            f"<div class='prisma-meta' style='margin-top:0.4rem;'>"
             f"<a href='{it['url']}' target='_blank' rel='noreferrer'>"
             f"Abrir notícia na fonte original ↗</a></div>",
             unsafe_allow_html=True,

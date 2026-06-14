@@ -1,4 +1,4 @@
-"""CLI do ESUP News (Typer)."""
+"""CLI do Prisma (Typer)."""
 from __future__ import annotations
 
 import re
@@ -31,7 +31,7 @@ from .ingestion.orchestrator import run_ingestion
 from .seeds.courses import seed_courses
 from .seeds.keywords import seed_keywords
 
-app = typer.Typer(add_completion=False, no_args_is_help=True, help="ESUP News — protótipo")
+app = typer.Typer(add_completion=False, no_args_is_help=True, help="Prisma — protótipo")
 console = Console()
 
 
@@ -170,6 +170,21 @@ def cmd_report(
     with connect() as conn:
         path = export_xlsx(conn, out)
     console.print(f"[green]OK[/green] Relatorio gerado em [bold]{path}[/bold]")
+
+
+@app.command("export-web")
+def cmd_export_web(
+    out: Path | None = typer.Option(
+        None, "--out", help="caminho do snapshot JSON (padrão: web/lib/data/articles.json)"
+    ),
+    cutoff: int | None = typer.Option(None, "--cutoff", help="score mínimo (padrão do .env)"),
+) -> None:
+    """Exporta os artigos classificados para o portal (snapshot JSON)."""
+    from .analysis.web_export import export_web
+
+    with connect() as conn:
+        n, path = export_web(conn, out, cutoff=cutoff)
+    console.print(f"[green]OK[/green] {n} artigos exportados para [bold]{path}[/bold]")
 
 
 @app.command("info")

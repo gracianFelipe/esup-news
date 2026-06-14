@@ -16,14 +16,14 @@ export function Closing() {
                 <h2 className="mt-6 font-serif text-5xl leading-[0.95] tracking-tightest md:text-[7rem] letterspread">
                   Leia o que <span className="text-accent">importa</span> no
                   <br />
-                  seu curso.
+                  seu tema.
                 </h2>
               </Reveal>
             </Parallax>
             <Reveal variant="fade" stagger={2}>
               <p className="mt-10 max-w-2xl font-serif text-2xl leading-[1.25] text-paper/75 md:text-[1.55rem]">
-                O ESUP News reúne, em um só lugar, as notícias mais atuais das
-                áreas que você estuda. Sem dispersão, com curadoria, no ritmo de
+                O Prisma reúne, em um só lugar, as notícias mais atuais dos
+                temas que você acompanha. Sem dispersão, com curadoria, no ritmo de
                 um jornal feito para ser lido com calma.
               </p>
             </Reveal>
@@ -33,17 +33,17 @@ export function Closing() {
         <Reveal variant="fade" stagger={3}>
           <div className="mt-16 flex flex-wrap items-center gap-8">
             <Link
-              href="/curso/direito"
+              href="/tema/justica"
               className="group inline-flex items-center gap-3 border-b border-paper/40 pb-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
             >
-              começar por Direito
+              começar por Justiça
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
             <Link
-              href="#cursos"
+              href="#temas"
               className="editorial-link text-[14px] tracking-[0.04em] text-paper/60 hover:text-paper"
             >
-              ou escolher outro curso
+              ou escolher outro tema
             </Link>
           </div>
         </Reveal>

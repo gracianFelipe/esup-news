@@ -33,9 +33,14 @@ class TheNewsApiProvider(NewsProvider):
         if not self.api_key:
             return FetchResult(self.name, query, None, [], 0, error="missing_api_key")
 
+        # The News API usa o pipe "|" como operador OR; o "OR" literal viraria um
+        # termo obrigatório e zeraria os resultados. O builder de queries usa
+        # " OR " como forma canônica — traduzimos para o dialeto deste provedor.
+        search_query = query.replace(" OR ", " | ")
+
         params = {
             "api_token": self.api_key,
-            "search": query,
+            "search": search_query,
             "search_fields": "title,description,keywords",
             "language": ",".join(languages),
             "published_after": published_after[:10],  # The News API aceita YYYY-MM-DD

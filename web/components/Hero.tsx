@@ -15,11 +15,11 @@ export function Hero() {
             As notícias
           </Reveal>
           <Reveal variant="rise" stagger={1} className="block letterspread">
-            dos cursos da
+            que importam,
           </Reveal>
           <Parallax distance={-32}>
             <Reveal variant="rise" stagger={2} className="block letterspread text-accent">
-              ESUP.
+              por tema.
             </Reveal>
           </Parallax>
         </h1>
@@ -27,9 +27,9 @@ export function Hero() {
         <div className="mt-14 grid grid-cols-12 gap-6 md:mt-20">
           <Reveal variant="fade" stagger={1} className="col-span-12 md:col-span-7">
             <p className="max-w-2xl font-serif text-2xl leading-[1.25] tracking-tight text-paper/85 md:text-[1.7rem]">
-              Um jornal universitário pensado para quem quer estudar já conectado
-              ao presente. Curadoria semanal de Direito, Administração,
-              Tecnologia, Educação, Contábeis e Psicologia.
+              Um jornal de curadoria pensado para quem quer ler já conectado
+              ao presente. Seleção semanal de Justiça, Negócios,
+              Tecnologia, Educação, Finanças e Comportamento.
             </p>
           </Reveal>
 
@@ -40,10 +40,10 @@ export function Hero() {
           >
             <div className="flex flex-col items-start gap-4 md:items-end">
               <Link
-                href="#cursos"
+                href="#temas"
                 className="group inline-flex items-center gap-3 border-b border-paper/40 pb-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
               >
-                explorar por curso
+                explorar por tema
                 <span className="transition-transform group-hover:translate-x-1">↓</span>
               </Link>
               <Link
@@ -61,8 +61,8 @@ export function Hero() {
       <div className="mx-auto max-w-editorial px-6 md:px-10">
         <div className="flex items-end justify-between border-t border-paper/15 py-5">
           <span className="eyebrow">vol. 01</span>
-          <span className="eyebrow">7 cursos · curadoria editorial</span>
-          <span className="eyebrow">esup news</span>
+          <span className="eyebrow">7 temas · curadoria editorial</span>
+          <span className="eyebrow">prisma</span>
         </div>
       </div>
     </section>

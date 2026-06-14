@@ -2,18 +2,18 @@ import Link from "next/link";
 import type { Article } from "@/lib/types";
 import { AbstractCover } from "./AbstractCover";
 import { formatRelative } from "@/lib/format";
-import { getCourse } from "@/lib/mock/courses";
+import { getTheme } from "@/lib/mock/themes";
 
 type Size = "hero" | "feature" | "regular" | "compact" | "list";
 
 type Props = {
   article: Article;
   size?: Size;
-  showCourse?: boolean;
+  showTheme?: boolean;
 };
 
-export function NewsCard({ article, size = "regular", showCourse = false }: Props) {
-  const course = getCourse(article.courseSlug);
+export function NewsCard({ article, size = "regular", showTheme = false }: Props) {
+  const theme = getTheme(article.themeSlug);
   const href = `/noticia/${article.slug}`;
 
   if (size === "list") {
@@ -21,8 +21,8 @@ export function NewsCard({ article, size = "regular", showCourse = false }: Prop
       <Link href={href} className="group block border-t border-paper/10 py-7">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-9">
-            {showCourse && course && (
-              <div className="eyebrow mb-3">{course.label}</div>
+            {showTheme && theme && (
+              <div className="eyebrow mb-3">{theme.label}</div>
             )}
             <h3 className="font-serif text-2xl leading-[1.15] tracking-tightest text-paper transition-colors group-hover:text-accent md:text-3xl">
               {article.title}
@@ -66,7 +66,7 @@ export function NewsCard({ article, size = "regular", showCourse = false }: Prop
       </div>
       <div className="mt-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          {showCourse && course && <span className="eyebrow">{course.label}</span>}
+          {showTheme && theme && <span className="eyebrow">{theme.label}</span>}
         </div>
         <span className="eyebrow">{formatRelative(article.publishedAt)}</span>
       </div>

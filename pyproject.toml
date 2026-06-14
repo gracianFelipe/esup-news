@@ -1,7 +1,7 @@
 [project]
-name = "esup-news"
+name = "prisma"
 version = "0.2.0"
-description = "ESUP News — protótipo de validação (ingestão, classificação e curadoria)"
+description = "Prisma — protótipo de validação (ingestão, classificação e curadoria)"
 requires-python = ">=3.11"
 readme = "README.md"
 dependencies = [
@@ -24,7 +24,7 @@ dev = [
 ]
 
 [project.scripts]
-esup-news = "esup_news.cli:app"
+prisma = "esup_news.cli:app"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

@@ -1,4 +1,4 @@
-"""Seed dos 7 cursos da ESUP com configuração de fonte primária/secundária."""
+"""Seed dos 7 temas do Prisma com configuração de fonte primária/secundária."""
 from __future__ import annotations
 
 import json
@@ -6,50 +6,50 @@ import sqlite3
 
 COURSES = [
     {
-        "slug": "direito",
-        "name": "Direito",
+        "slug": "justica",
+        "name": "Justiça",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt"],
     },
     {
-        "slug": "administracao",
-        "name": "Administração",
+        "slug": "negocios",
+        "name": "Negócios",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt", "en"],
     },
     {
-        "slug": "sistemas-da-informacao",
-        "name": "Sistemas da Informação",
+        "slug": "tecnologia",
+        "name": "Tecnologia",
         "primary_provider": "thenewsapi",
         "secondary_provider": "newsdata",
         "query_languages": ["en", "pt"],
     },
     {
-        "slug": "processos-gerenciais",
-        "name": "Processos Gerenciais",
+        "slug": "gestao",
+        "name": "Gestão",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt", "en"],
     },
     {
-        "slug": "pedagogia",
-        "name": "Pedagogia",
+        "slug": "educacao",
+        "name": "Educação",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt"],
     },
     {
-        "slug": "ciencias-contabeis",
-        "name": "Ciências Contábeis",
+        "slug": "financas",
+        "name": "Finanças",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt"],
     },
     {
-        "slug": "psicologia",
-        "name": "Psicologia",
+        "slug": "comportamento",
+        "name": "Comportamento",
         "primary_provider": "newsdata",
         "secondary_provider": "thenewsapi",
         "query_languages": ["pt"],

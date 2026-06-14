@@ -5,13 +5,13 @@ import { Footer } from "@/components/Footer";
 import { ThemeScript } from "@/components/ThemeScript";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { CursorHalo } from "@/components/CursorHalo";
-import { CourseTracker } from "@/components/CourseTracker";
+import { ThemeTracker } from "@/components/ThemeTracker";
 
 export const metadata: Metadata = {
-  title: "ESUP News — Jornal universitário",
+  title: "Prisma — Jornal de curadoria",
   description:
-    "As notícias mais atuais dos cursos da ESUP em um só lugar. Direito, Administração, Sistemas da Informação, Processos Gerenciais, Pedagogia, Ciências Contábeis e Psicologia.",
-  applicationName: "ESUP News",
+    "As notícias mais atuais, organizadas por tema, em um só lugar. Justiça, Negócios, Tecnologia, Gestão, Educação, Finanças e Comportamento.",
+  applicationName: "Prisma",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollProgress />
         <Header />
         <main className="relative z-10">{children}</main>
-        <CourseTracker />
+        <ThemeTracker />
         <Footer />
       </body>
     </html>

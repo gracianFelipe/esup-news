@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { COURSES } from "@/lib/mock/courses";
+import { THEMES } from "@/lib/mock/themes";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
@@ -8,35 +8,32 @@ export function Header() {
       <div className="mx-auto flex max-w-editorial items-center justify-between px-6 py-5 md:px-10">
         <Link href="/" className="group flex items-baseline gap-2">
           <span className="font-serif text-[1.55rem] font-medium leading-none tracking-tightest">
-            Esup
-          </span>
-          <span className="font-serif text-[1.55rem] font-medium leading-none tracking-tightest text-accent">
-            News
+            Prisma
           </span>
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
-          {COURSES.slice(0, 5).map((c) => (
+          {THEMES.slice(0, 5).map((t) => (
             <Link
-              key={c.slug}
-              href={`/curso/${c.slug}`}
+              key={t.slug}
+              href={`/tema/${t.slug}`}
               className="editorial-link text-[13px] tracking-[0.04em] text-paper/80 hover:text-paper"
             >
-              {c.shortName}
+              {t.shortName}
             </Link>
           ))}
           <Link
-            href="/#cursos"
+            href="/#temas"
             className="editorial-link text-[13px] tracking-[0.04em] text-paper/60 hover:text-paper"
           >
-            todos os cursos
+            todos os temas
           </Link>
         </nav>
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
-            href="/#cursos"
+            href="/#temas"
             className="hidden text-[12px] uppercase tracking-eyebrow text-paper/70 hover:text-paper md:inline"
           >
             menu

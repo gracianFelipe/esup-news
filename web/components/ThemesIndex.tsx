@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { COURSES } from "@/lib/mock/courses";
+import { THEMES } from "@/lib/mock/themes";
 import { Reveal } from "./Reveal";
 
-export function CoursesIndex() {
+export function ThemesIndex() {
   return (
     <section
-      id="cursos"
+      id="temas"
       className="border-t border-paper/10"
     >
       <div className="mx-auto max-w-editorial px-6 py-20 md:px-10 md:py-28">
@@ -13,7 +13,7 @@ export function CoursesIndex() {
           <Reveal variant="rise" className="col-span-12 md:col-span-5">
             <div className="eyebrow">índice</div>
             <h2 className="mt-4 font-serif text-5xl leading-[0.95] tracking-tightest md:text-7xl letterspread">
-              Sete cursos.
+              Sete temas.
               <br />
               Sete capítulos.
             </h2>
@@ -24,14 +24,14 @@ export function CoursesIndex() {
             className="col-span-12 md:col-span-6 md:col-start-7"
           >
             <p className="max-w-xl font-serif text-2xl leading-[1.25] text-paper/80 md:text-[1.55rem]">
-              Cada curso vira uma seção editorial neste jornal. Role para
+              Cada tema vira uma seção editorial neste jornal. Role para
               encontrar destaques, leituras de fundo e o que está em pauta agora.
             </p>
           </Reveal>
         </div>
 
         <ol className="mt-16 grid grid-cols-12 gap-x-10 gap-y-1">
-          {COURSES.map((c, i) => {
+          {THEMES.map((c, i) => {
             const stagger = (Math.min(i, 5) as 0 | 1 | 2 | 3 | 4 | 5);
             return (
               <Reveal

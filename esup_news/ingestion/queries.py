@@ -1,7 +1,9 @@
 """Constrói as queries de busca a partir das keywords de um curso.
 
-Estratégia: separar keywords ativas em lotes e juntar com operador OR (|).
-The News API e NewsData.io aceitam o pipe como OR.
+Estratégia: separar keywords ativas em lotes e juntar com o operador OR.
+A forma canônica usa " OR " (aceito direto pela NewsData.io). O The News API
+não aceita "OR" literal — usa o pipe "|" —, então o TheNewsApiProvider
+traduz " OR " para " | " ao chamar a API.
 
 A NewsData.io tem um limite documentado de ~100 caracteres no parâmetro `q`.
 Para respeitar esse limite, montamos as queries de forma incremental: enquanto

@@ -1,4 +1,4 @@
-import type { Article, CourseSlug } from "../types";
+import type { Article, ThemeSlug } from "../types";
 
 const HOURS = 1000 * 60 * 60;
 const now = Date.UTC(2026, 4, 13, 12, 0, 0); // 2026-05-13T12:00Z
@@ -8,11 +8,11 @@ function iso(hoursAgo: number): string {
 }
 
 export const ARTICLES: Article[] = [
-  // --- Direito ---
+  // --- Justiça ---
   {
     id: "dir-001",
     slug: "stf-fixa-tese-sobre-prazo-de-protocolo-eletronico-e-redefine-praxe-forense",
-    courseSlug: "direito",
+    themeSlug: "justica",
     title: "STF fixa tese sobre prazo de protocolo eletrônico e redefine práxe forense",
     subtitle:
       "Decisão unifica o entendimento sobre o término do expediente forense em meio digital e atinge milhares de processos pendentes.",
@@ -26,7 +26,7 @@ export const ARTICLES: Article[] = [
   {
     id: "dir-002",
     slug: "anpd-publica-guia-de-boas-praticas-em-lgpd-para-empresas-de-pequeno-porte",
-    courseSlug: "direito",
+    themeSlug: "justica",
     title: "ANPD publica guia de boas práticas em LGPD para empresas de pequeno porte",
     subtitle:
       "Documento simplifica obrigações e cria caminho prático para conformidade em negócios com até 50 funcionários.",
@@ -40,7 +40,7 @@ export const ARTICLES: Article[] = [
   {
     id: "dir-003",
     slug: "reforma-tributaria-define-regulamentacao-do-ibs-e-cbs",
-    courseSlug: "direito",
+    themeSlug: "justica",
     title: "Reforma tributária define regulamentação do IBS e da CBS",
     subtitle:
       "Lei complementar detalha alíquotas, regime de transição e ajustes para setores específicos como saúde, educação e transporte.",
@@ -54,7 +54,7 @@ export const ARTICLES: Article[] = [
   {
     id: "dir-004",
     slug: "cnj-aprova-resolucao-sobre-uso-de-ia-em-decisoes-judiciais",
-    courseSlug: "direito",
+    themeSlug: "justica",
     title: "CNJ aprova resolução sobre uso de IA em decisões judiciais",
     subtitle:
       "Norma exige supervisão humana, transparência sobre o modelo utilizado e cria comitê permanente de avaliação ética.",
@@ -66,11 +66,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "dir-004",
   },
 
-  // --- Administração ---
+  // --- Negócios ---
   {
     id: "adm-001",
     slug: "estudo-aponta-que-empresas-com-governanca-formal-crescem-23-mais",
-    courseSlug: "administracao",
+    themeSlug: "negocios",
     title: "Estudo aponta que empresas com governança formal crescem 23% mais",
     subtitle:
       "Pesquisa com 1.200 empresas brasileiras revela ligação direta entre práticas de governança e desempenho de longo prazo.",
@@ -84,7 +84,7 @@ export const ARTICLES: Article[] = [
   {
     id: "adm-002",
     slug: "people-analytics-deixa-de-ser-tendencia-e-vira-pratica-comum-no-rh",
-    courseSlug: "administracao",
+    themeSlug: "negocios",
     title: "People analytics deixa de ser tendência e vira prática comum no RH",
     subtitle:
       "Quase metade das empresas brasileiras já usa dados estruturados para decidir contratação, promoção e retenção.",
@@ -98,7 +98,7 @@ export const ARTICLES: Article[] = [
   {
     id: "adm-003",
     slug: "esg-passa-por-revisao-e-ganha-metricas-mais-rigorosas-no-brasil",
-    courseSlug: "administracao",
+    themeSlug: "negocios",
     title: "ESG passa por revisão e ganha métricas mais rigorosas no Brasil",
     subtitle:
       "Reguladores cobram relatórios padronizados e empresas começam a separar discurso de prática.",
@@ -110,11 +110,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "adm-003",
   },
 
-  // --- Sistemas da Informação ---
+  // --- Tecnologia ---
   {
     id: "si-001",
     slug: "modelos-de-linguagem-locais-ganham-espaco-em-empresas-com-dados-sensiveis",
-    courseSlug: "sistemas-da-informacao",
+    themeSlug: "tecnologia",
     title: "Modelos de linguagem locais ganham espaço em empresas com dados sensíveis",
     subtitle:
       "Bancos, hospitais e escritórios de advocacia adotam LLMs rodando em infraestrutura própria por exigências de compliance.",
@@ -128,7 +128,7 @@ export const ARTICLES: Article[] = [
   {
     id: "si-002",
     slug: "vulnerabilidade-em-biblioteca-popular-de-criptografia-mobiliza-equipes-de-seguranca",
-    courseSlug: "sistemas-da-informacao",
+    themeSlug: "tecnologia",
     title:
       "Vulnerabilidade em biblioteca popular de criptografia mobiliza equipes de segurança",
     subtitle:
@@ -143,7 +143,7 @@ export const ARTICLES: Article[] = [
   {
     id: "si-003",
     slug: "engenheiros-de-software-relatam-mudanca-permanente-na-rotina-com-uso-de-ia",
-    courseSlug: "sistemas-da-informacao",
+    themeSlug: "tecnologia",
     title:
       "Engenheiros de software relatam mudança permanente na rotina com uso de IA",
     subtitle:
@@ -158,7 +158,7 @@ export const ARTICLES: Article[] = [
   {
     id: "si-004",
     slug: "open-source-brasileiro-recebe-aporte-publico-para-infraestrutura-de-dados",
-    courseSlug: "sistemas-da-informacao",
+    themeSlug: "tecnologia",
     title:
       "Open source brasileiro recebe aporte público para infraestrutura de dados",
     subtitle:
@@ -171,11 +171,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "si-004",
   },
 
-  // --- Processos Gerenciais ---
+  // --- Gestão ---
   {
     id: "proc-001",
     slug: "industria-brasileira-reduz-tempo-de-ciclo-com-automacao-de-processos",
-    courseSlug: "processos-gerenciais",
+    themeSlug: "gestao",
     title:
       "Indústria brasileira reduz tempo de ciclo com automação de processos",
     subtitle:
@@ -190,7 +190,7 @@ export const ARTICLES: Article[] = [
   {
     id: "proc-002",
     slug: "lean-six-sigma-volta-ao-radar-de-empresas-de-servicos",
-    courseSlug: "processos-gerenciais",
+    themeSlug: "gestao",
     title: "Lean Six Sigma volta ao radar de empresas de serviços",
     subtitle:
       "Bancos, seguradoras e operadoras de saúde retomam metodologia para enxugar processos administrativos.",
@@ -204,7 +204,7 @@ export const ARTICLES: Article[] = [
   {
     id: "proc-003",
     slug: "cadeia-de-suprimentos-enfrenta-pressao-por-resiliencia-climatica",
-    courseSlug: "processos-gerenciais",
+    themeSlug: "gestao",
     title:
       "Cadeia de suprimentos enfrenta pressão por resiliência climática",
     subtitle:
@@ -217,11 +217,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "proc-003",
   },
 
-  // --- Pedagogia ---
+  // --- Educação ---
   {
     id: "ped-001",
     slug: "alfabetizacao-na-idade-certa-volta-ao-centro-da-politica-educacional",
-    courseSlug: "pedagogia",
+    themeSlug: "educacao",
     title:
       "Alfabetização na idade certa volta ao centro da política educacional",
     subtitle:
@@ -236,7 +236,7 @@ export const ARTICLES: Article[] = [
   {
     id: "ped-002",
     slug: "metodologias-ativas-encontram-resistencia-em-escolas-com-infraestrutura-limitada",
-    courseSlug: "pedagogia",
+    themeSlug: "educacao",
     title:
       "Metodologias ativas encontram resistência em escolas com infraestrutura limitada",
     subtitle:
@@ -251,7 +251,7 @@ export const ARTICLES: Article[] = [
   {
     id: "ped-003",
     slug: "educacao-socioemocional-ganha-protocolos-mais-claros-em-redes-publicas",
-    courseSlug: "pedagogia",
+    themeSlug: "educacao",
     title:
       "Educação socioemocional ganha protocolos mais claros em redes públicas",
     subtitle:
@@ -264,11 +264,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "ped-003",
   },
 
-  // --- Ciências Contábeis ---
+  // --- Finanças ---
   {
     id: "ctb-001",
     slug: "cfc-publica-orientacao-sobre-contabilizacao-de-creditos-tributarios-do-novo-regime",
-    courseSlug: "ciencias-contabeis",
+    themeSlug: "financas",
     title:
       "CFC publica orientação sobre contabilização de créditos tributários do novo regime",
     subtitle:
@@ -283,7 +283,7 @@ export const ARTICLES: Article[] = [
   {
     id: "ctb-002",
     slug: "controladoria-passa-a-ocupar-papel-estrategico-em-empresas-de-medio-porte",
-    courseSlug: "ciencias-contabeis",
+    themeSlug: "financas",
     title:
       "Controladoria passa a ocupar papel estratégico em empresas de médio porte",
     subtitle:
@@ -298,7 +298,7 @@ export const ARTICLES: Article[] = [
   {
     id: "ctb-003",
     slug: "auditoria-incorpora-analise-de-dados-em-larga-escala",
-    courseSlug: "ciencias-contabeis",
+    themeSlug: "financas",
     title: "Auditoria incorpora análise de dados em larga escala",
     subtitle:
       "Firmas migram de amostragem para análise integral de transações em mandatos relevantes.",
@@ -310,11 +310,11 @@ export const ARTICLES: Article[] = [
     imageSeed: "ctb-003",
   },
 
-  // --- Psicologia ---
+  // --- Comportamento ---
   {
     id: "psi-001",
     slug: "saude-mental-no-trabalho-passa-a-ser-tema-de-norma-regulamentadora",
-    courseSlug: "psicologia",
+    themeSlug: "comportamento",
     title:
       "Saúde mental no trabalho passa a ser tema de norma regulamentadora",
     subtitle:
@@ -329,7 +329,7 @@ export const ARTICLES: Article[] = [
   {
     id: "psi-002",
     slug: "burnout-em-adolescentes-cresce-e-mobiliza-redes-de-cuidado",
-    courseSlug: "psicologia",
+    themeSlug: "comportamento",
     title: "Burnout em adolescentes cresce e mobiliza redes de cuidado",
     subtitle:
       "Pesquisa nacional registra aumento expressivo dos quadros e aponta para a interseção entre escola, família e redes sociais.",
@@ -343,7 +343,7 @@ export const ARTICLES: Article[] = [
   {
     id: "psi-003",
     slug: "terapia-cognitivo-comportamental-ganha-protocolo-para-uso-em-grupo",
-    courseSlug: "psicologia",
+    themeSlug: "comportamento",
     title:
       "Terapia cognitivo-comportamental ganha protocolo para uso em grupo",
     subtitle:
@@ -357,8 +357,8 @@ export const ARTICLES: Article[] = [
   },
 ];
 
-export function getArticlesByCourse(slug: CourseSlug): Article[] {
-  return ARTICLES.filter((a) => a.courseSlug === slug).sort(
+export function getArticlesByTheme(slug: ThemeSlug): Article[] {
+  return ARTICLES.filter((a) => a.themeSlug === slug).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
@@ -367,13 +367,13 @@ export function getArticleBySlug(slug: string): Article | undefined {
   return ARTICLES.find((a) => a.slug === slug);
 }
 
-export function getFeaturedByCourse(slug: CourseSlug): Article | undefined {
-  const list = getArticlesByCourse(slug);
+export function getFeaturedByTheme(slug: ThemeSlug): Article | undefined {
+  const list = getArticlesByTheme(slug);
   return list.find((a) => a.featured) ?? list[0];
 }
 
 export function getRelated(article: Article, limit = 3): Article[] {
-  return getArticlesByCourse(article.courseSlug)
+  return getArticlesByTheme(article.themeSlug)
     .filter((a) => a.id !== article.id)
     .slice(0, limit);
 }

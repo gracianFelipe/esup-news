@@ -1,14 +1,14 @@
-export type CourseSlug =
-  | "direito"
-  | "administracao"
-  | "sistemas-da-informacao"
-  | "processos-gerenciais"
-  | "pedagogia"
-  | "ciencias-contabeis"
-  | "psicologia";
+export type ThemeSlug =
+  | "justica"
+  | "negocios"
+  | "tecnologia"
+  | "gestao"
+  | "educacao"
+  | "financas"
+  | "comportamento";
 
-export type Course = {
-  slug: CourseSlug;
+export type Theme = {
+  slug: ThemeSlug;
   name: string;
   shortName: string;
   tagline: string;
@@ -20,7 +20,7 @@ export type Course = {
 export type Article = {
   id: string;
   slug: string;
-  courseSlug: CourseSlug;
+  themeSlug: ThemeSlug;
   title: string;
   subtitle: string;
   body: string;

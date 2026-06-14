@@ -4,8 +4,8 @@ import {
   ARTICLES,
   getArticleBySlug,
   getRelated,
-} from "@/lib/mock/articles";
-import { getCourse } from "@/lib/mock/courses";
+} from "@/lib/data/articles";
+import { getTheme } from "@/lib/mock/themes";
 import { AbstractCover } from "@/components/AbstractCover";
 import { NewsCard } from "@/components/NewsCard";
 import { Reveal } from "@/components/Reveal";
@@ -17,6 +17,23 @@ export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
 }
 
+// Quebra o texto em parágrafos. Se vier sem quebras de linha (comum nas APIs),
+// agrupa ~3 frases por parágrafo para dar respiro à leitura.
+function toParagraphs(text: string): string[] {
+  const byBreak = text
+    .split(/\n{2,}/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (byBreak.length > 1) return byBreak;
+  const sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)/g);
+  if (!sentences) return [text.trim()];
+  const paras: string[] = [];
+  for (let i = 0; i < sentences.length; i += 3) {
+    paras.push(sentences.slice(i, i + 3).join(" ").trim());
+  }
+  return paras.length ? paras : [text.trim()];
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -24,8 +41,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const a = getArticleBySlug(slug);
-  if (!a) return { title: "Matéria — ESUP News" };
-  return { title: `${a.title} — ESUP News`, description: a.subtitle };
+  if (!a) return { title: "Matéria — Prisma" };
+  return { title: `${a.title} — Prisma`, description: a.subtitle };
 }
 
 export default async function ArticlePage({
@@ -37,17 +54,17 @@ export default async function ArticlePage({
   const article = getArticleBySlug(slug);
   if (!article) notFound();
 
-  const course = getCourse(article.courseSlug);
+  const theme = getTheme(article.themeSlug);
   const related = getRelated(article, 3);
 
   return (
     <article>
       <div className="mx-auto max-w-editorial px-6 pt-12 md:px-10 md:pt-20">
         <Link
-          href={course ? `/curso/${course.slug}` : "/"}
+          href={theme ? `/tema/${theme.slug}` : "/"}
           className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-paper/60 hover:text-paper"
         >
-          ← {course?.label ?? "ESUP News"}
+          ← {theme?.label ?? "Prisma"}
         </Link>
       </div>
 
@@ -56,7 +73,7 @@ export default async function ArticlePage({
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-9">
             <Reveal variant="fade">
-              <div className="eyebrow text-accent">{course?.label}</div>
+              <div className="eyebrow text-accent">{theme?.label}</div>
             </Reveal>
             <Reveal variant="rise" stagger={1}>
               <h1 className="mt-6 font-serif text-4xl leading-[1.02] tracking-tightest md:text-[5.5rem] md:leading-[0.98] letterspread">
@@ -92,16 +109,23 @@ export default async function ArticlePage({
       {/* Corpo */}
       <div className="mx-auto max-w-prose px-6 py-16 md:py-24">
         <Reveal variant="fade">
-          <p className="font-serif text-2xl leading-[1.45] text-paper md:text-[1.5rem]">
-            {article.body}
-          </p>
+          {article.body.trim() ? (
+            <div className="space-y-6 font-serif text-xl leading-[1.6] text-paper/95 md:text-[1.35rem] md:leading-[1.65]">
+              {toParagraphs(article.body).map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="font-serif text-xl leading-relaxed text-paper/80">
+              Esta matéria está disponível na íntegra no veículo de origem.
+            </p>
+          )}
         </Reveal>
 
         <Reveal variant="fade" stagger={1}>
           <p className="mt-10 text-[16px] leading-relaxed text-paper/80">
-            As informações apresentadas neste protótipo são ilustrativas e fazem
-            parte do material editorial do ESUP News em desenvolvimento. Para a
-            versão final, cada matéria estará vinculada a uma fonte verificável.
+            Este é um resumo curado pelo Prisma a partir da publicação original.
+            O texto completo está disponível no veículo de origem, no link abaixo.
           </p>
         </Reveal>
 
@@ -128,12 +152,12 @@ export default async function ArticlePage({
                 <div>
                   <div className="eyebrow">continue lendo</div>
                   <h2 className="mt-3 font-serif text-3xl tracking-tightest md:text-5xl">
-                    Mais em {course?.shortName}
+                    Mais em {theme?.shortName}
                   </h2>
                 </div>
-                {course && (
+                {theme && (
                   <Link
-                    href={`/curso/${course.slug}`}
+                    href={`/tema/${theme.slug}`}
                     className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-paper/60 hover:text-paper"
                   >
                     todas as matérias →

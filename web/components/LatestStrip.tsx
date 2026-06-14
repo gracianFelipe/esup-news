@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getLatest } from "@/lib/mock/articles";
-import { getCourse } from "@/lib/mock/courses";
+import { getLatest } from "@/lib/data/articles";
+import { getTheme } from "@/lib/mock/themes";
 import { formatRelative } from "@/lib/format";
 import { Reveal } from "./Reveal";
 
@@ -20,17 +20,17 @@ export function LatestStrip() {
             </h2>
           </div>
           <Link
-            href="#cursos"
+            href="#temas"
             className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-paper/60 hover:text-paper"
           >
-            navegar por curso
+            navegar por tema
           </Link>
         </div>
       </Reveal>
 
       <ul>
         {items.map((a, i) => {
-          const c = getCourse(a.courseSlug);
+          const c = getTheme(a.themeSlug);
           const stagger = (Math.min(i, 5) as 0 | 1 | 2 | 3 | 4 | 5);
           return (
             <Reveal as="li" key={a.id} variant="from-left" stagger={stagger}>

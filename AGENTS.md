@@ -11,16 +11,23 @@ editorial** em Next.js, em `web/` (descrito na §12).
 
 ## 1. O que é este projeto
 
-**ESUP News — protótipo de validação (v0.2).** Sistema local em Python que
+**Prisma — protótipo de validação (v0.2).** Sistema local em Python que
 coleta notícias de duas APIs (NewsData.io e The News API), normaliza,
-deduplica, classifica por curso da ESUP, e expõe um painel Streamlit para
+deduplica, classifica por tema, e expõe um painel Streamlit para
 curadoria humana. O objetivo do protótipo é responder 4 perguntas com dados
 reais antes de construir o sistema completo:
 
-1. Qual API entrega mais volume útil por curso em PT-BR?
+1. Qual API entrega mais volume útil por tema em PT-BR?
 2. Quais keywords têm alta precisão e quais geram ruído?
 3. Qual a taxa real de duplicidade bloqueada e quantas escapam?
 4. O score automático prevê bem a decisão humana?
+
+> **Nota de nomenclatura.** O produto se chama **Prisma**, mas internamente o
+> backend Python preserva o vocabulário original: o pacote `esup_news`, a
+> tabela SQLite `courses`, a flag `--course` da CLI e as colunas `course_id`
+> foram **mantidos de propósito** para não quebrar o schema e os scripts. A
+> tradução "curso → tema" vale para o produto e para o portal (`web/`); no
+> backend, "curso" segue sendo o termo técnico.
 
 Não é produção. Não há frontend público nesta fase.
 
@@ -91,9 +98,9 @@ Estes são compromissos arquiteturais do PRD v0.2. Não revogar sem aprovação:
   `tests/test_scorer.py::test_score_breakdown_sums_to_score`).
 - **4 gatilhos de fallback discretos**: `http_error`, `zero_results`,
   `low_unique`, `low_quality`. Cada um logado em `job_logs.fallback_reason`.
-- **NewsData.io é primária para cursos PT-BR**, The News API para SI.
-  Híbrida para Administração e Processos Gerenciais. Está em
-  `esup_news/seeds/courses.py`.
+- **NewsData.io é primária para temas PT-BR**, The News API para Tecnologia.
+  Híbrida para Negócios e Gestão. Está em
+  `esup_news/seeds/courses.py` (nome do arquivo mantido por compatibilidade).
 - **Console rich em UTF-8**: nada de caracteres acima de ASCII em mensagens
   de CLI sem antes garantir `sys.stdout.reconfigure(encoding="utf-8")`
   (Windows cp1252 quebra).
@@ -216,6 +223,23 @@ Como atualizar:
 
 ## 11. Changelog
 
+- **2026-06-13** — rebrand **ESUP News → Prisma**. Produto deixou de ser
+  amarrado à escola ESUP e virou um jornal de curadoria geral organizado por
+  temas. Os 7 cursos viraram 7 temas: `direito`→`justica` (Justiça),
+  `administracao`→`negocios` (Negócios),
+  `sistemas-da-informacao`→`tecnologia` (Tecnologia),
+  `processos-gerenciais`→`gestao` (Gestão), `pedagogia`→`educacao` (Educação),
+  `ciencias-contabeis`→`financas` (Finanças),
+  `psicologia`→`comportamento` (Comportamento). No portal (`web/`) o
+  vocabulário "curso → tema" foi aplicado por completo: `Course`→`Theme`,
+  `CourseSlug`→`ThemeSlug`, `COURSES`→`THEMES`, componentes
+  `CourseBlock`→`ThemeBlock`, `CourseTracker`→`ThemeTracker`,
+  `CoursesIndex`→`ThemesIndex`, mock `lib/mock/courses.ts`→`lib/mock/themes.ts`,
+  rota `/curso/[slug]`→`/tema/[slug]`, chave de tema do `localStorage`
+  `esup-theme`→`prisma-theme`. **Backend mantido de propósito**: pacote
+  `esup_news`, tabela `courses`, flag `--course`, colunas `course_id` e nomes
+  de env var **não** mudaram — só os 7 slugs/nomes dos seeds, as strings de
+  marca e o texto institucional da ESUP foram ajustados.
 - **2026-05-13** — v0.2 inicial: estrutura do protótipo, 7 cursos, 125
   keywords, dois provedores, scorer com breakdown, fallback com 4 gatilhos,
   Streamlit minimalista, 18 testes verdes.
@@ -227,7 +251,7 @@ Como atualizar:
   de scroll adicionados ao `web/`. Tokens passaram a viver em CSS vars
   (`--ink`, `--paper`, `--accent`), Tailwind consome via `rgb(var(--...))`
   com alpha. Reveal por IntersectionObserver, Parallax via rAF + CSS custom
-  property, ScrollProgress, CursorHalo, CourseTracker sticky. Ver §12.8 e §12.9.
+  property, ScrollProgress, CursorHalo, ThemeTracker sticky. Ver §12.8 e §12.9.
 
 ---
 
@@ -236,6 +260,10 @@ Como atualizar:
 Aplicação **Next.js 15 (App Router) + TypeScript + Tailwind CSS** em
 `c:\scripts\esup-news\web\`. Independente do backend Python — hoje usa mocks,
 no futuro consumirá os dados via API leve a partir do SQLite.
+
+> No portal, o conceito editorial chama-se **tema** (`Theme` / `themeSlug`).
+> É o mesmo conceito que o backend chama de "curso" (`course_id`) — a tradução
+> acontece só na fronteira com o frontend. Ver §11 (changelog 2026-06-13).
 
 ### 12.1 Stack e dependências
 
@@ -264,22 +292,22 @@ web/
 │   ├── layout.tsx                 # shell + Header + Footer
 │   ├── page.tsx                   # home
 │   ├── globals.css                # tokens base, eyebrow, editorial-link
-│   ├── curso/[slug]/page.tsx      # página de curso (SSG)
+│   ├── tema/[slug]/page.tsx       # página de tema (SSG)
 │   └── noticia/[slug]/page.tsx    # página de notícia (SSG)
 ├── components/
 │   ├── Header.tsx
 │   ├── Footer.tsx
 │   ├── Hero.tsx
 │   ├── LatestStrip.tsx            # tira "desta semana"
-│   ├── CoursesIndex.tsx           # índice "sete cursos, sete capítulos"
-│   ├── CourseBlock.tsx            # bloco de curso na home (4 variantes)
+│   ├── ThemesIndex.tsx            # índice "sete temas, sete capítulos"
+│   ├── ThemeBlock.tsx             # bloco de tema na home (4 variantes)
 │   ├── NewsCard.tsx               # card de notícia (5 tamanhos)
 │   └── AbstractCover.tsx          # SVG procedural por seed
 ├── lib/
-│   ├── types.ts                   # Course, Article, CourseSlug
+│   ├── types.ts                   # Theme, Article, ThemeSlug
 │   ├── format.ts                  # formatDate, formatRelative
 │   └── mock/
-│       ├── courses.ts             # 7 cursos
+│       ├── themes.ts              # 7 temas
 │       └── articles.ts            # 23 notícias mockadas
 ├── package.json
 ├── tailwind.config.ts
@@ -299,7 +327,7 @@ web/
 - **Microinterações sutis**: `editorial-link` (sublinhado animado),
   `hover-zoom` (SVG cresce 2%), `animate-rise`/`animate-fade` no hero.
   Nada de Framer Motion neste estágio.
-- **Ritmo na home**: a função `CourseBlock` alterna 4 variantes
+- **Ritmo na home**: a função `ThemeBlock` alterna 4 variantes
   (`image-left`, `image-right`, `stacked`, `split-grid`) por índice. Não
   remover essa variação — é o que cria o "storytelling de scroll".
 
@@ -316,11 +344,14 @@ npm start                # serve build de produção
 ### 12.6 Modelo de dados (mock → futuro backend)
 
 `Article` em `lib/types.ts` espelha o que o backend Python produz:
-`id`, `slug`, `courseSlug`, `title`, `subtitle`, `body`, `source`,
+`id`, `slug`, `themeSlug`, `title`, `subtitle`, `body`, `source`,
 `publishedAt` (ISO 8601), `externalUrl`, `featured`, `imageSeed`.
 
+> O backend entrega esse vínculo como `course_id`; o portal mapeia para
+> `themeSlug` na fronteira de dados.
+
 Quando o backend for conectado, criar `lib/data/` com funções de mesmo nome
-que `lib/mock/` (`getArticlesByCourse`, `getArticleBySlug`, `getFeaturedByCourse`,
+que `lib/mock/` (`getArticlesByTheme`, `getArticleBySlug`, `getFeaturedByTheme`,
 `getRelated`, `getLatest`), implementadas em cima de uma API leve do Python
 (provavelmente FastAPI lendo o SQLite). Manter a assinatura idêntica para que
 as páginas não precisem mudar.
@@ -340,7 +371,7 @@ iguais (`bg-ink`, `text-paper`, `text-accent`) — só a paleta resolvida muda.
 - O atributo `data-theme="dark|light"` é fixado em `<html>` por
   `components/ThemeScript.tsx`, um `<script>` síncrono inline no `<head>`.
   Roda antes do React hidratar — **sem flash**.
-- A preferência é persistida em `localStorage` com a chave `esup-theme`.
+- A preferência é persistida em `localStorage` com a chave `prisma-theme`.
   Se não houver preferência salva, segue `prefers-color-scheme`.
 - O botão de troca está em `components/ThemeToggle.tsx`, presente no Header.
 - A troca usa transição `0.6s` em `background-color` e `color` no body. Não
@@ -361,7 +392,7 @@ optou por menos movimento.
 | `Parallax` | Desloca um filho proporcionalmente ao scroll, via `requestAnimationFrame` + CSS custom property `--p` (0..1). |
 | `ScrollProgress` | Linha fina dourada no topo (transform: scaleX) + ticker `nn / 100` no canto inferior direito. |
 | `CursorHalo` | Halo dourado suave que segue o cursor com easing. Aparece só em `(pointer: fine)`. |
-| `CourseTracker` | Pílula fixa no canto inferior esquerdo que mostra o curso atual enquanto rola pelos blocos da home. |
+| `ThemeTracker` | Pílula fixa no canto inferior esquerdo que mostra o tema atual enquanto rola pelos blocos da home. |
 
 Convenções:
 

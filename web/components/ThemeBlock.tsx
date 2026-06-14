@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { Course } from "@/lib/types";
-import { getArticlesByCourse, getFeaturedByCourse } from "@/lib/mock/articles";
+import type { Theme } from "@/lib/types";
+import { getArticlesByTheme, getFeaturedByTheme } from "@/lib/data/articles";
 import { NewsCard } from "./NewsCard";
 import { AbstractCover } from "./AbstractCover";
 import { formatRelative } from "@/lib/format";
@@ -10,13 +10,13 @@ import { Parallax } from "./Parallax";
 type Variant = "image-left" | "image-right" | "stacked" | "split-grid";
 
 type Props = {
-  course: Course;
+  theme: Theme;
   index: number;
 };
 
-export function CourseBlock({ course, index }: Props) {
-  const featured = getFeaturedByCourse(course.slug);
-  const articles = getArticlesByCourse(course.slug);
+export function ThemeBlock({ theme, index }: Props) {
+  const featured = getFeaturedByTheme(theme.slug);
+  const articles = getArticlesByTheme(theme.slug);
   const secondary = articles.filter((a) => a.id !== featured?.id).slice(0, 4);
 
   const variants: Variant[] = ["image-left", "image-right", "stacked", "split-grid"];
@@ -26,9 +26,9 @@ export function CourseBlock({ course, index }: Props) {
 
   return (
     <section
-      id={course.slug}
+      id={theme.slug}
       className="relative border-t border-paper/10 py-20 md:py-28"
-      aria-labelledby={`title-${course.slug}`}
+      aria-labelledby={`title-${theme.slug}`}
     >
       {/* Número decorativo gigante atrás do bloco, com parallax sutil */}
       <Parallax distance={-60}>
@@ -41,28 +41,28 @@ export function CourseBlock({ course, index }: Props) {
       </Parallax>
 
       <div className="relative mx-auto max-w-editorial px-6 md:px-10">
-        <CourseHeader course={course} index={index} />
+        <ThemeHeader theme={theme} index={index} />
 
         {variant === "image-left" && (
-          <ImageLeft course={course} featured={featured} secondary={secondary} />
+          <ImageLeft theme={theme} featured={featured} secondary={secondary} />
         )}
         {variant === "image-right" && (
-          <ImageRight course={course} featured={featured} secondary={secondary} />
+          <ImageRight theme={theme} featured={featured} secondary={secondary} />
         )}
         {variant === "stacked" && (
-          <Stacked course={course} featured={featured} secondary={secondary} />
+          <Stacked theme={theme} featured={featured} secondary={secondary} />
         )}
         {variant === "split-grid" && (
-          <SplitGrid course={course} featured={featured} secondary={secondary} />
+          <SplitGrid theme={theme} featured={featured} secondary={secondary} />
         )}
 
         <Reveal variant="fade">
           <div className="mt-14 flex justify-end">
             <Link
-              href={`/curso/${course.slug}`}
+              href={`/tema/${theme.slug}`}
               className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-accent hover:text-paper"
             >
-              ver tudo sobre {course.shortName.toLowerCase()} →
+              ver tudo sobre {theme.shortName.toLowerCase()} →
             </Link>
           </div>
         </Reveal>
@@ -71,17 +71,17 @@ export function CourseBlock({ course, index }: Props) {
   );
 }
 
-function CourseHeader({ course, index }: { course: Course; index: number }) {
+function ThemeHeader({ theme, index }: { theme: Theme; index: number }) {
   const idx = String(index + 1).padStart(2, "0");
   return (
     <div className="mb-12 grid grid-cols-12 gap-6 md:mb-16">
       <Reveal variant="rise" className="col-span-12 md:col-span-4">
-        <div className="eyebrow">{idx} · curso</div>
+        <div className="eyebrow">{idx} · tema</div>
         <h2
-          id={`title-${course.slug}`}
+          id={`title-${theme.slug}`}
           className="mt-4 font-serif text-5xl leading-[0.95] tracking-tightest md:text-7xl letterspread"
         >
-          {course.name}
+          {theme.name}
         </h2>
       </Reveal>
       <Reveal
@@ -90,10 +90,10 @@ function CourseHeader({ course, index }: { course: Course; index: number }) {
         className="col-span-12 md:col-span-7 md:col-start-6"
       >
         <p className="font-serif text-2xl leading-[1.25] tracking-tight text-paper/85 md:text-[1.65rem]">
-          {course.tagline}
+          {theme.tagline}
         </p>
         <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-paper/60">
-          {course.description}
+          {theme.description}
         </p>
       </Reveal>
     </div>
@@ -101,9 +101,9 @@ function CourseHeader({ course, index }: { course: Course; index: number }) {
 }
 
 type VariantProps = {
-  course: Course;
-  featured: NonNullable<ReturnType<typeof getFeaturedByCourse>>;
-  secondary: ReturnType<typeof getArticlesByCourse>;
+  theme: Theme;
+  featured: NonNullable<ReturnType<typeof getFeaturedByTheme>>;
+  secondary: ReturnType<typeof getArticlesByTheme>;
 };
 
 function ImageLeft({ featured, secondary }: VariantProps) {
@@ -201,17 +201,17 @@ function Stacked({ featured, secondary }: VariantProps) {
   );
 }
 
-function SplitGrid({ course, featured, secondary }: VariantProps) {
+function SplitGrid({ theme, featured, secondary }: VariantProps) {
   return (
     <div className="grid grid-cols-12 gap-x-10 gap-y-12">
       <Reveal variant="rise" className="col-span-12 md:col-span-5">
         <Parallax distance={-30}>
           <div className="relative">
-            <AbstractCover seed={`${course.slug}-mark`} ratio="tall" intensity="soft" />
+            <AbstractCover seed={`${theme.slug}-mark`} ratio="tall" intensity="soft" />
             <div className="absolute inset-x-0 bottom-0 p-8">
               <div className="eyebrow text-paper/70">vitrine</div>
               <div className="mt-2 font-serif text-3xl leading-[1.05] tracking-tightest text-paper md:text-4xl">
-                {course.name}
+                {theme.name}
               </div>
             </div>
           </div>
