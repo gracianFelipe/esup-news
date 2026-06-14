@@ -1,6 +1,6 @@
 <div align="center">
 
-# Prisma
+# The Prism
 
 **Um jornal de curadoria, organizado por temas.**
 Notícias dos sete temas editoriais, em uma experiência editorial digital com curadoria semanal.
@@ -22,14 +22,14 @@ Educação · Finanças · Comportamento
 
 ## Visão geral
 
-O Prisma é um agregador editorial de notícias por tema. O sistema é dividido em **duas frentes que vivem no mesmo repositório**:
+The Prism é um agregador editorial de notícias por tema. O sistema é dividido em **duas frentes que vivem no mesmo repositório**:
 
 | Frente | Stack | Onde |
 |---|---|---|
 | **Backend / protótipo** de ingestão, classificação e curadoria | Python 3.11 · SQLite · Streamlit · APScheduler | `esup_news/`, `admin.py` |
 | **Portal público** com experiência editorial | Next.js 15 · TypeScript · Tailwind CSS | `web/` |
 
-A ideia central é simples: em vez de mandar o leitor caçar notícias por aí, o Prisma coleta automaticamente, classifica por tema, pontua relevância e expõe um jornal digital com visual autoral.
+A ideia central é simples: em vez de mandar o leitor caçar notícias por aí, o The Prism coleta automaticamente, classifica por tema, pontua relevância e expõe um jornal digital com visual autoral.
 
 > Esta primeira fase é um **protótipo de validação**. O foco é responder, com dados reais, se a estratégia de coleta funciona para cada tema — antes de construir o produto completo.
 
@@ -191,7 +191,7 @@ pytest                            # 18 testes (normalizer, scorer, dedupe)
 ## Estrutura do repositório
 
 ```
-prisma/
+the-prism/
 ├── esup_news/                    # backend Python
 │   ├── cli.py                    # Typer: init-db, seed, ingest, stats, report
 │   ├── db.py                     # schema SQLite + trigger
@@ -262,6 +262,6 @@ Cobertura mínima alvo por tema: **20 artigos coletados** e **8 aprovados ou 30%
 
 <div align="center">
 
-Feito com curadoria · Prisma · 2026
+Feito com curadoria · The Prism · 2026
 
 </div>

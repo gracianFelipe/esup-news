@@ -8,7 +8,7 @@ export function Header() {
       <div className="mx-auto flex max-w-editorial items-center justify-between px-6 py-5 md:px-10">
         <Link href="/" className="group flex items-baseline gap-2">
           <span className="font-serif text-[1.55rem] font-medium leading-none tracking-tightest">
-            Prisma
+            The Prism
           </span>
         </Link>
 

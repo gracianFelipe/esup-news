@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="font-serif text-3xl tracking-tightest md:text-4xl">
-              Pris<span className="text-accent">ma</span>
+              The <span className="text-accent">Prism</span>
             </div>
             <p className="mt-5 max-w-md text-[15px] leading-relaxed text-paper/70">
               Um jornal de curadoria, organizado por temas. Curadoria semanal, leitura sem ruído.
@@ -34,14 +34,14 @@ export function Footer() {
           <div className="md:col-span-3">
             <div className="eyebrow mb-4">edição</div>
             <p className="text-[13px] leading-relaxed text-paper/60">
-              Os textos exibidos neste protótipo são fictícios e servem para
-              ilustrar a experiência editorial em desenvolvimento.
+              As notícias são coletadas automaticamente de fontes públicas e
+              organizadas por tema. Cada matéria leva à publicação original.
             </p>
           </div>
         </div>
 
         <div className="mt-16 flex items-center justify-between border-t border-paper/10 pt-6">
-          <span className="eyebrow">© prisma — 2026</span>
+          <span className="eyebrow">© the prism — 2026</span>
           <span className="eyebrow">prototype · v0.1</span>
         </div>
       </div>

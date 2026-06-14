@@ -1,4 +1,4 @@
-"""Painel interno de curadoria do Prisma.
+"""Painel interno de curadoria do The Prism.
 
 Não é o produto público. É a ferramenta administrativa usada pelo curador
 para aprovar/rejeitar notícias coletadas. Otimizado para clareza, contraste
@@ -15,7 +15,7 @@ from esup_news.config import settings
 from esup_news.db import connect
 
 st.set_page_config(
-    page_title="Prisma — Curadoria",
+    page_title="The Prism — Curadoria",
     page_icon=":newspaper:",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -217,7 +217,7 @@ REASON_LABELS = {
 # SIDEBAR — filtros
 # ============================================================================
 with st.sidebar:
-    st.markdown("### Prisma")
+    st.markdown("### The Prism")
     st.caption("Painel de curadoria")
     st.markdown("---")
 

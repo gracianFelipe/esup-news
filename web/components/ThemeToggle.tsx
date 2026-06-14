@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-const STORAGE_KEY = "prisma-theme";
+const STORAGE_KEY = "theprism-theme";
 
 function readInitial(): Theme {
   if (typeof document === "undefined") return "dark";

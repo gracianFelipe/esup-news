@@ -1,4 +1,4 @@
-"""Seed dos 7 temas do Prisma com configuração de fonte primária/secundária."""
+"""Seed dos 7 temas do The Prism com configuração de fonte primária/secundária."""
 from __future__ import annotations
 
 import json

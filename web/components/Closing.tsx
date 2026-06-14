@@ -22,7 +22,7 @@ export function Closing() {
             </Parallax>
             <Reveal variant="fade" stagger={2}>
               <p className="mt-10 max-w-2xl font-serif text-2xl leading-[1.25] text-paper/75 md:text-[1.55rem]">
-                O Prisma reúne, em um só lugar, as notícias mais atuais dos
+                The Prism reúne, em um só lugar, as notícias mais atuais dos
                 temas que você acompanha. Sem dispersão, com curadoria, no ritmo de
                 um jornal feito para ser lido com calma.
               </p>

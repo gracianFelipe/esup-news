@@ -8,10 +8,10 @@ import { CursorHalo } from "@/components/CursorHalo";
 import { ThemeTracker } from "@/components/ThemeTracker";
 
 export const metadata: Metadata = {
-  title: "Prisma — Jornal de curadoria",
+  title: "The Prism — Jornal de curadoria",
   description:
     "As notícias mais atuais, organizadas por tema, em um só lugar. Justiça, Negócios, Tecnologia, Gestão, Educação, Finanças e Comportamento.",
-  applicationName: "Prisma",
+  applicationName: "The Prism",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

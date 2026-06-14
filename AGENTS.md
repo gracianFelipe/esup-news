@@ -11,7 +11,7 @@ editorial** em Next.js, em `web/` (descrito na §12).
 
 ## 1. O que é este projeto
 
-**Prisma — protótipo de validação (v0.2).** Sistema local em Python que
+**The Prism — protótipo de validação (v0.2).** Sistema local em Python que
 coleta notícias de duas APIs (NewsData.io e The News API), normaliza,
 deduplica, classifica por tema, e expõe um painel Streamlit para
 curadoria humana. O objetivo do protótipo é responder 4 perguntas com dados
@@ -22,7 +22,7 @@ reais antes de construir o sistema completo:
 3. Qual a taxa real de duplicidade bloqueada e quantas escapam?
 4. O score automático prevê bem a decisão humana?
 
-> **Nota de nomenclatura.** O produto se chama **Prisma**, mas internamente o
+> **Nota de nomenclatura.** O produto se chama **The Prism**, mas internamente o
 > backend Python preserva o vocabulário original: o pacote `esup_news`, a
 > tabela SQLite `courses`, a flag `--course` da CLI e as colunas `course_id`
 > foram **mantidos de propósito** para não quebrar o schema e os scripts. A
@@ -223,6 +223,11 @@ Como atualizar:
 
 ## 11. Changelog
 
+- **2026-06-13** — rebrand **Prisma → The Prism** (apenas o nome do produto;
+  temas/slugs/vocabulário inalterados); chave do `localStorage`
+  `prisma-theme` → `theprism-theme`; pacote npm `prisma-web` → `theprism-web`;
+  nome/script do `pyproject` `prisma` → `theprism`; classes CSS `.prisma-` do
+  `admin.py` mantidas.
 - **2026-06-13** — rebrand **ESUP News → Prisma**. Produto deixou de ser
   amarrado à escola ESUP e virou um jornal de curadoria geral organizado por
   temas. Os 7 cursos viraram 7 temas: `direito`→`justica` (Justiça),
@@ -371,7 +376,7 @@ iguais (`bg-ink`, `text-paper`, `text-accent`) — só a paleta resolvida muda.
 - O atributo `data-theme="dark|light"` é fixado em `<html>` por
   `components/ThemeScript.tsx`, um `<script>` síncrono inline no `<head>`.
   Roda antes do React hidratar — **sem flash**.
-- A preferência é persistida em `localStorage` com a chave `prisma-theme`.
+- A preferência é persistida em `localStorage` com a chave `theprism-theme`.
   Se não houver preferência salva, segue `prefers-color-scheme`.
 - O botão de troca está em `components/ThemeToggle.tsx`, presente no Header.
 - A troca usa transição `0.6s` em `background-color` e `color` no body. Não

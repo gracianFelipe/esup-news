@@ -19,9 +19,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const theme = getTheme(slug);
-  if (!theme) return { title: "Tema — Prisma" };
+  if (!theme) return { title: "Tema — The Prism" };
   return {
-    title: `${theme.name} — Prisma`,
+    title: `${theme.name} — The Prism`,
     description: theme.description,
   };
 }
@@ -57,7 +57,7 @@ export default async function ThemePage({
             href="/"
             className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-paper/60 hover:text-paper"
           >
-            ← prisma
+            ← the prism
           </Link>
 
           <div className="mt-10 grid grid-cols-12 gap-6">

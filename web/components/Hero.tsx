@@ -62,7 +62,7 @@ export function Hero() {
         <div className="flex items-end justify-between border-t border-paper/15 py-5">
           <span className="eyebrow">vol. 01</span>
           <span className="eyebrow">7 temas · curadoria editorial</span>
-          <span className="eyebrow">prisma</span>
+          <span className="eyebrow">the prism</span>
         </div>
       </div>
     </section>

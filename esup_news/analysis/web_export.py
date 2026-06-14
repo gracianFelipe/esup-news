@@ -1,4 +1,4 @@
-"""Exporta os artigos classificados para o portal Prisma (snapshot JSON).
+"""Exporta os artigos classificados para o portal The Prism (snapshot JSON).
 
 Gera `web/lib/data/articles.json` espelhando o tipo `Article` do portal
 (`web/lib/types.ts`). Cada artigo é atribuído ao seu tema de maior score

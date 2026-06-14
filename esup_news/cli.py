@@ -1,4 +1,4 @@
-"""CLI do Prisma (Typer)."""
+"""CLI do The Prism (Typer)."""
 from __future__ import annotations
 
 import re
@@ -31,7 +31,7 @@ from .ingestion.orchestrator import run_ingestion
 from .seeds.courses import seed_courses
 from .seeds.keywords import seed_keywords
 
-app = typer.Typer(add_completion=False, no_args_is_help=True, help="Prisma — protótipo")
+app = typer.Typer(add_completion=False, no_args_is_help=True, help="The Prism — protótipo")
 console = Console()
 
 

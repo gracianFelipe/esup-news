@@ -6,7 +6,7 @@ export function ThemeScript() {
   const code = `
     (function () {
       try {
-        var stored = localStorage.getItem('prisma-theme');
+        var stored = localStorage.getItem('theprism-theme');
         var theme = stored;
         if (!theme) {
           theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';

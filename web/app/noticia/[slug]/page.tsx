@@ -41,8 +41,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const a = getArticleBySlug(slug);
-  if (!a) return { title: "Matéria — Prisma" };
-  return { title: `${a.title} — Prisma`, description: a.subtitle };
+  if (!a) return { title: "Matéria — The Prism" };
+  return { title: `${a.title} — The Prism`, description: a.subtitle };
 }
 
 export default async function ArticlePage({
@@ -64,7 +64,7 @@ export default async function ArticlePage({
           href={theme ? `/tema/${theme.slug}` : "/"}
           className="editorial-link font-mono text-[12px] uppercase tracking-eyebrow text-paper/60 hover:text-paper"
         >
-          ← {theme?.label ?? "Prisma"}
+          ← {theme?.label ?? "The Prism"}
         </Link>
       </div>
 
@@ -124,7 +124,7 @@ export default async function ArticlePage({
 
         <Reveal variant="fade" stagger={1}>
           <p className="mt-10 text-[16px] leading-relaxed text-paper/80">
-            Este é um resumo curado pelo Prisma a partir da publicação original.
+            Este é um resumo curado pelo The Prism a partir da publicação original.
             O texto completo está disponível no veículo de origem, no link abaixo.
           </p>
         </Reveal>

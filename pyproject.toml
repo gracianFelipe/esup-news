@@ -1,7 +1,7 @@
 [project]
-name = "prisma"
+name = "theprism"
 version = "0.2.0"
-description = "Prisma — protótipo de validação (ingestão, classificação e curadoria)"
+description = "The Prism — protótipo de validação (ingestão, classificação e curadoria)"
 requires-python = ">=3.11"
 readme = "README.md"
 dependencies = [
@@ -24,7 +24,7 @@ dev = [
 ]
 
 [project.scripts]
-prisma = "esup_news.cli:app"
+theprism = "esup_news.cli:app"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

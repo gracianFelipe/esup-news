@@ -34,3 +34,4 @@ web/.next/
 web/out/
 web/.env
 web/.env.*.local
+.vercel
