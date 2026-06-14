@@ -10,7 +10,7 @@ export function Hero() {
           <div className="eyebrow">edição corrente — maio 2026</div>
         </Reveal>
 
-        <h1 className="mt-8 font-serif text-[12vw] leading-[0.86] tracking-tightest md:text-[8rem] lg:text-[10rem]">
+        <h1 className="mt-8 font-serif text-[12vw] leading-[1.02] tracking-tight md:text-[8rem] md:leading-[0.86] md:tracking-tightest lg:text-[10rem]">
           <Reveal variant="rise" stagger={0} className="block letterspread">
             As notícias
           </Reveal>
@@ -36,19 +36,19 @@ export function Hero() {
           <Reveal
             variant="fade"
             stagger={2}
-            className="col-span-12 flex items-end justify-end md:col-span-4 md:col-start-9"
+            className="col-span-12 flex items-end justify-start md:col-span-4 md:col-start-9 md:justify-end"
           >
             <div className="flex flex-col items-start gap-4 md:items-end">
               <Link
                 href="#temas"
-                className="group inline-flex items-center gap-3 border-b border-paper/40 pb-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
+                className="group inline-flex items-center gap-3 border-b border-paper/40 py-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
               >
                 explorar por tema
                 <span className="transition-transform group-hover:translate-x-1">↓</span>
               </Link>
               <Link
                 href="#ultimas"
-                className="group inline-flex items-center gap-3 pb-2 text-[14px] tracking-[0.04em] text-paper/60 hover:text-paper"
+                className="group inline-flex items-center gap-3 py-2 text-[14px] tracking-[0.04em] text-paper/60 hover:text-paper"
               >
                 ver últimas notícias
               </Link>
@@ -59,7 +59,7 @@ export function Hero() {
 
       {/* Marcação editorial */}
       <div className="mx-auto max-w-editorial px-6 md:px-10">
-        <div className="flex items-end justify-between border-t border-paper/15 py-5">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between border-t border-paper/15 py-5">
           <span className="eyebrow">vol. 01</span>
           <span className="eyebrow">7 temas · curadoria editorial</span>
           <span className="eyebrow">the prism</span>

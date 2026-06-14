@@ -8,11 +8,11 @@ export function ThemesIndex() {
       id="temas"
       className="border-t border-paper/10"
     >
-      <div className="mx-auto max-w-editorial px-6 py-20 md:px-10 md:py-28">
+      <div className="mx-auto max-w-editorial px-6 py-14 md:px-10 md:py-28">
         <div className="grid grid-cols-12 gap-6">
           <Reveal variant="rise" className="col-span-12 md:col-span-5">
             <div className="eyebrow">índice</div>
-            <h2 className="mt-4 font-serif text-5xl leading-[0.95] tracking-tightest md:text-7xl letterspread">
+            <h2 className="mt-4 font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl md:leading-[0.95] md:tracking-tightest letterspread">
               Sete temas.
               <br />
               Sete capítulos.
@@ -30,7 +30,7 @@ export function ThemesIndex() {
           </Reveal>
         </div>
 
-        <ol className="mt-16 grid grid-cols-12 gap-x-10 gap-y-1">
+        <ol className="mt-10 md:mt-16 grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-1">
           {THEMES.map((c, i) => {
             const stagger = (Math.min(i, 5) as 0 | 1 | 2 | 3 | 4 | 5);
             return (

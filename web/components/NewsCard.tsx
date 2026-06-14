@@ -24,7 +24,7 @@ export function NewsCard({ article, size = "regular", showTheme = false }: Props
             {showTheme && theme && (
               <div className="eyebrow mb-3">{theme.label}</div>
             )}
-            <h3 className="font-serif text-2xl leading-[1.15] tracking-tightest text-paper transition-colors group-hover:text-accent md:text-3xl">
+            <h3 className="font-serif text-2xl leading-[1.18] tracking-tight text-paper transition-colors group-hover:text-accent md:text-3xl md:leading-[1.15] md:tracking-tightest">
               {article.title}
             </h3>
             <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-paper/70">
@@ -45,12 +45,12 @@ export function NewsCard({ article, size = "regular", showTheme = false }: Props
 
   const titleClasses =
     size === "hero"
-      ? "font-serif text-4xl leading-[1.05] tracking-tightest md:text-6xl"
+      ? "font-serif text-4xl leading-[1.12] tracking-tight md:text-6xl md:leading-[1.05] md:tracking-tightest"
       : size === "feature"
-        ? "font-serif text-3xl leading-[1.08] tracking-tightest md:text-4xl"
+        ? "font-serif text-3xl leading-[1.15] tracking-tight md:text-4xl md:leading-[1.08] md:tracking-tightest"
         : size === "compact"
-          ? "font-serif text-xl leading-[1.15] tracking-tightest md:text-2xl"
-          : "font-serif text-2xl leading-[1.1] tracking-tightest md:text-[1.7rem]";
+          ? "font-serif text-xl leading-[1.15] tracking-tight md:text-2xl md:tracking-tightest"
+          : "font-serif text-2xl leading-[1.18] tracking-tight md:text-[1.7rem] md:leading-[1.1] md:tracking-tightest";
 
   const subtitleClasses =
     size === "compact"

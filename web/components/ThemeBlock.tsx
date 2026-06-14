@@ -27,14 +27,14 @@ export function ThemeBlock({ theme, index }: Props) {
   return (
     <section
       id={theme.slug}
-      className="relative border-t border-paper/10 py-20 md:py-28"
+      className="relative overflow-hidden border-t border-paper/10 py-14 md:py-28"
       aria-labelledby={`title-${theme.slug}`}
     >
       {/* Número decorativo gigante atrás do bloco, com parallax sutil */}
       <Parallax distance={-60}>
         <div
           aria-hidden
-          className="pointer-events-none absolute right-4 top-10 select-none font-serif text-[18rem] leading-none tracking-tightest text-paper/[0.025] md:right-10 md:text-[24rem]"
+          className="pointer-events-none absolute right-4 top-10 select-none font-serif text-[7rem] leading-none tracking-tightest text-paper/[0.025] md:right-10 md:text-[24rem]"
         >
           {String(index + 1).padStart(2, "0")}
         </div>
@@ -79,7 +79,7 @@ function ThemeHeader({ theme, index }: { theme: Theme; index: number }) {
         <div className="eyebrow">{idx} · tema</div>
         <h2
           id={`title-${theme.slug}`}
-          className="mt-4 font-serif text-5xl leading-[0.95] tracking-tightest md:text-7xl letterspread"
+          className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight md:text-7xl md:leading-[0.95] md:tracking-tightest letterspread"
         >
           {theme.name}
         </h2>
@@ -208,9 +208,9 @@ function SplitGrid({ theme, featured, secondary }: VariantProps) {
         <Parallax distance={-30}>
           <div className="relative">
             <AbstractCover seed={`${theme.slug}-mark`} ratio="tall" intensity="soft" />
-            <div className="absolute inset-x-0 bottom-0 p-8">
+            <div className="absolute inset-x-0 bottom-0 p-5 md:p-8">
               <div className="eyebrow text-paper/70">vitrine</div>
-              <div className="mt-2 font-serif text-3xl leading-[1.05] tracking-tightest text-paper md:text-4xl">
+              <div className="mt-2 font-serif text-2xl leading-[1.15] tracking-tight text-paper md:text-4xl md:leading-[1.05] md:tracking-tightest">
                 {theme.name}
               </div>
             </div>
@@ -221,7 +221,7 @@ function SplitGrid({ theme, featured, secondary }: VariantProps) {
         <Reveal variant="fade">
           <NewsCard article={featured} size="feature" />
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-6">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {secondary.slice(0, 2).map((a, i) => {
             const stagger = ((i + 1) as 1 | 2);
             return (

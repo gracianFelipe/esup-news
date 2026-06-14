@@ -23,6 +23,8 @@ export function Parallax({ children, distance = -28, className = "" }: Props) {
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mq.matches) return;
+    // Sem parallax em telas pequenas: evita scroll horizontal e jank em mobile.
+    if (window.matchMedia("(max-width: 767px)").matches) return;
 
     let frame = 0;
     const update = () => {

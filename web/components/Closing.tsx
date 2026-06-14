@@ -5,7 +5,7 @@ import { Parallax } from "./Parallax";
 export function Closing() {
   return (
     <section className="border-t border-paper/10">
-      <div className="mx-auto max-w-editorial px-6 py-24 md:px-10 md:py-36">
+      <div className="mx-auto max-w-editorial px-6 py-16 md:px-10 md:py-36">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-9">
             <Reveal variant="fade">
@@ -13,7 +13,7 @@ export function Closing() {
             </Reveal>
             <Parallax distance={-24}>
               <Reveal variant="rise" stagger={1}>
-                <h2 className="mt-6 font-serif text-5xl leading-[0.95] tracking-tightest md:text-[7rem] letterspread">
+                <h2 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-[7rem] md:leading-[0.95] md:tracking-tightest letterspread">
                   Leia o que <span className="text-accent">importa</span> no
                   <br />
                   seu tema.
@@ -31,10 +31,10 @@ export function Closing() {
         </div>
 
         <Reveal variant="fade" stagger={3}>
-          <div className="mt-16 flex flex-wrap items-center gap-8">
+          <div className="mt-16 flex flex-wrap items-center gap-4 md:gap-8">
             <Link
               href="/tema/justica"
-              className="group inline-flex items-center gap-3 border-b border-paper/40 pb-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
+              className="group inline-flex items-center gap-3 border-b border-paper/40 py-2 text-[14px] tracking-[0.04em] text-paper hover:border-accent hover:text-accent"
             >
               começar por Justiça
               <span className="transition-transform group-hover:translate-x-1">→</span>

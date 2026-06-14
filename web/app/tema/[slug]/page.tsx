@@ -47,7 +47,7 @@ export default async function ThemePage({
         <Parallax distance={-50}>
           <div
             aria-hidden
-            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 select-none font-serif text-[20rem] leading-none tracking-tightest text-paper/[0.03] md:text-[28rem]"
+            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 select-none font-serif text-[9rem] leading-none tracking-tightest text-paper/[0.03] md:text-[28rem]"
           >
             {String(index + 1).padStart(2, "0")}
           </div>
@@ -65,7 +65,7 @@ export default async function ThemePage({
               <div className="eyebrow">
                 {String(index + 1).padStart(2, "0")} · tema
               </div>
-              <h1 className="mt-4 font-serif text-[14vw] leading-[0.88] tracking-tightest md:text-[9rem] letterspread">
+              <h1 className="mt-4 font-serif text-5xl leading-[1.05] tracking-tight md:text-[9rem] md:leading-[0.88] md:tracking-tightest letterspread">
                 {theme.name}
               </h1>
             </Reveal>

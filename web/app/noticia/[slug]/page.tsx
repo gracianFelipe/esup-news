@@ -76,7 +76,7 @@ export default async function ArticlePage({
               <div className="eyebrow text-accent">{theme?.label}</div>
             </Reveal>
             <Reveal variant="rise" stagger={1}>
-              <h1 className="mt-6 font-serif text-4xl leading-[1.02] tracking-tightest md:text-[5.5rem] md:leading-[0.98] letterspread">
+              <h1 className="mt-6 font-serif text-3xl leading-[1.12] tracking-tight md:text-[5.5rem] md:leading-[0.98] md:tracking-tightest letterspread">
                 {article.title}
               </h1>
             </Reveal>
@@ -107,7 +107,7 @@ export default async function ArticlePage({
       </Reveal>
 
       {/* Corpo */}
-      <div className="mx-auto max-w-prose px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-prose px-6 py-12 md:py-24">
         <Reveal variant="fade">
           {article.body.trim() ? (
             <div className="space-y-6 font-serif text-xl leading-[1.6] text-paper/95 md:text-[1.35rem] md:leading-[1.65]">
@@ -146,9 +146,9 @@ export default async function ArticlePage({
       {/* Relacionadas */}
       {related.length > 0 && (
         <section className="border-t border-paper/10">
-          <div className="mx-auto max-w-editorial px-6 py-20 md:px-10 md:py-28">
+          <div className="mx-auto max-w-editorial px-6 py-12 md:px-10 md:py-28">
             <Reveal variant="fade">
-              <div className="mb-10 flex items-end justify-between">
+              <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <div className="eyebrow">continue lendo</div>
                   <h2 className="mt-3 font-serif text-3xl tracking-tightest md:text-5xl">

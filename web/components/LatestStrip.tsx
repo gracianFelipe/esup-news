@@ -12,7 +12,7 @@ export function LatestStrip() {
       className="mx-auto max-w-editorial px-6 py-16 md:px-10 md:py-24"
     >
       <Reveal variant="fade">
-        <div className="mb-10 flex items-end justify-between">
+        <div className="mb-10 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="eyebrow">desta semana</div>
             <h2 className="mt-3 font-serif text-3xl tracking-tightest md:text-5xl">

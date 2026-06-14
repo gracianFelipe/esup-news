@@ -3,7 +3,7 @@ import { THEMES } from "@/lib/mock/themes";
 
 export function Footer() {
   return (
-    <footer className="mt-32 border-t border-paper/10">
+    <footer className="mt-20 md:mt-32 border-t border-paper/10">
       <div className="mx-auto max-w-editorial px-6 py-16 md:px-10 md:py-24">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
@@ -40,7 +40,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex items-center justify-between border-t border-paper/10 pt-6">
+        <div className="mt-16 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-paper/10 pt-6">
           <span className="eyebrow">© the prism — 2026</span>
           <span className="eyebrow">prototype · v0.1</span>
         </div>

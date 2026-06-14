@@ -2,6 +2,7 @@ import Link from "next/link";
 import { THEMES } from "@/lib/mock/themes";
 import { ThemeToggle } from "./ThemeToggle";
 import { PrismMark } from "./PrismMark";
+import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
   return (
@@ -40,6 +41,7 @@ export function Header() {
           >
             menu
           </Link>
+          <MobileMenu />
         </div>
       </div>
     </header>
